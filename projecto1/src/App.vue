@@ -1,13 +1,40 @@
 <template>
-  <div class="listGames">
-    <div v-for="post in games" :key="post.id" style="padding-left: 30px;">
-      <div @click="selectGame(post)">
-        {{ post.title }}  
+  <div class="container">
+    <div class="listGames">
+      <div v-for="post in games" :key="post.id" style="padding-left: 30px;">  
+        <div @click="selectGame(post)" >
+          {{ post.title }}  
+          
+        </div>
+      </div> 
+    </div>   
+    <div class="right_img">
+      <img :src="selectedGameThumbnail" alt="Selected Game Thumbnail">
+      <button @click="showDescription(selectedGame)">Show Description</button>
+      <div class="description">
+        <p>Descrição do jogo:</p>
+        <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
+        <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
+        <svg 
+          @click="toggleFavorite" 
+          height="30px" 
+          width="30px" 
+          version="1.1" 
+          id="Capa_1" 
+          xmlns="http://www.w3.org/2000/svg" 
+          xmlns:xlink="http://www.w3.org/1999/xlink" 
+          viewBox="0 0 47.94 47.94" 
+          xml:space="preserve" 
+          :fill="isFavorite ? '#d6cb05' : '#ffffff'"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier"> 
+            <path d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"></path> 
+          </g>
+        </svg>
       </div>
-    </div> 
-  </div>   
-  <div class="right_img">
-    <img :src="selectedGameThumbnail" alt="Selected Game Thumbnail">
+    </div>
   </div>
 </template>
 
@@ -18,16 +45,28 @@ export default {
   data() {
     return {
       games: [],
-      selectedGameThumbnail: null
+      selectedGameThumbnail: null,
+      selectedGameDescription: null,
+      selectedGame: null,
+      isFavorite: false 
     }
   },
   methods: {
     selectGame(post) {
       this.selectedGameThumbnail = post.thumbnail
+      this.selectedGame = post 
+      this.selectedGameDescription = null
     },
     fetchData() {
       axios.get('https://www.freetogame.com/api/games')
         .then(response => this.games = response.data)
+    },
+    showDescription(post) {
+      this.selectedGameDescription = post.short_description
+      this.selectGenre = post.genre
+    },
+    toggleFavorite() {
+      this.isFavorite = !this.isFavorite 
     }
   },
   mounted() {
@@ -51,16 +90,31 @@ export default {
   line-height: 40px;
 }
 
-.right_img {
-  padding-left: 30px;
-  position: fixed;
-  width:  500px;
-  top: 0;
-  right: 0;
-  bottom: 0;
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
+
+body {
+  margin: 0;
+  background-color: #2a475e ;
+}
+
+.right_img {
+  width: 700px;
+  margin-left: 600px;
+  margin-top: -150px;
+}
+
 .right_img img {
-  max-width: 100%;
-  max-height: 100vh;
+  width: 600px;
+  border-radius: 20px;
+}
+
+.description {
+  margin-bottom: -60px;
+  color: whitesmoke;
+  line-height: 40px;
 }
 </style>
