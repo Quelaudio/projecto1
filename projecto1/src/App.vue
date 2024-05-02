@@ -9,12 +9,13 @@
       </div> 
     </div>   
     <div class="right_img">
-      <img :src="selectedGameThumbnail" alt="Selected Game Thumbnail">
+      <img :src="selectedGameThumbnail" alt="">
       <button @click="showDescription(selectedGame)">Show Description</button>
       <div class="description">
         <p>Descrição do jogo:</p>
         <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
+        {{ favoriteGames }}
         <svg 
           @click="toggleFavorite" 
           height="30px" 
@@ -41,6 +42,7 @@
 <script>
 import axios from 'axios'
 
+
 export default {
   data() {
     return {
@@ -48,8 +50,11 @@ export default {
       selectedGameThumbnail: null,
       selectedGameDescription: null,
       selectedGame: null,
-      isFavorite: false 
+      isFavorite: false ,
+      favoriteGames: []
+    
     }
+    
   },
   methods: {
     selectGame(post) {
@@ -66,8 +71,11 @@ export default {
       this.selectGenre = post.genre
     },
     toggleFavorite() {
-      this.isFavorite = !this.isFavorite 
+      this.isFavorite = !this.isFavorite;
+      this.favoriteGames.push(this.selectedGame);
     }
+    
+  
   },
   mounted() {
     this.fetchData()
