@@ -9,13 +9,16 @@
       </div> 
     </div>   
     <div class="right_img">
+      <RouterView/>
       <img :src="selectedGameThumbnail" alt="">
       <button @click="showDescription(selectedGame)">Show Description</button>
       <div class="description">
+
         <p>Descrição do jogo:</p>
         <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
         {{ favoriteGames }}
+
         <svg 
           @click="toggleFavorite" 
           height="30px" 
@@ -41,6 +44,7 @@
 
 <script>
 import axios from 'axios'
+import firebase from 'firebase'
 
 
 export default {
@@ -51,8 +55,8 @@ export default {
       selectedGameDescription: null,
       selectedGame: null,
       isFavorite: false ,
-      favoriteGames: []
-    
+      favoriteGames: [],
+      user:{uid:'jOI550vLa1ZlkNN5wLybzOztEJW2'}
     }
     
   },
@@ -73,10 +77,13 @@ export default {
     toggleFavorite() {
       this.isFavorite = !this.isFavorite;
       this.favoriteGames.push(this.selectedGame);
-    }
+    },
+    insereFavorito(games){
+      firebase.database().ref(`/favoritos/${this.user.uid}/`).push().set(favoriteGames)
+  }
     
-  
   },
+  
   mounted() {
     this.fetchData()
   }

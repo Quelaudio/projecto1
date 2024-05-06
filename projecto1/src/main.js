@@ -6,9 +6,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
 
+
+import firebase from "firebase"
 
 const firebaseConfig = {
 
@@ -29,7 +29,7 @@ const firebaseConfig = {
   measurementId: "G-XEHKM0W8RB"
 
 };
-const appFire = initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
 
 
