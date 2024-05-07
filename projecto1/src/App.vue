@@ -1,6 +1,9 @@
 <template>
   <div class="container">
     <div class="listGames">
+      
+      
+      
       <div v-for="post in games" :key="post.id" style="padding-left: 30px;">  
         <div @click="selectGame(post)" >
           {{ post.title }}  
@@ -8,8 +11,9 @@
         </div>
       </div> 
     </div>   
+    
     <div class="right_img">
-      <RouterView/>
+      <!-- <RouterView/> -->
       <img :src="selectedGameThumbnail" alt="">
       <button @click="showDescription(selectedGame)">Show Description</button>
       <div class="description">
@@ -17,10 +21,14 @@
         <p>Descrição do jogo:</p>
         <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
-        {{ favoriteGames }}
 
+
+
+  
+
+  
         <svg 
-          @click="toggleFavorite" 
+          @click="insereFavorito()" 
           height="30px" 
           width="30px" 
           version="1.1" 
@@ -62,26 +70,22 @@ export default {
   },
   methods: {
     selectGame(post) {
-      this.selectedGameThumbnail = post.thumbnail
-      this.selectedGame = post 
-      this.selectedGameDescription = null
+      this.selectedGameThumbnail = post.thumbnail;
+      this.selectedGame = post ;
+      this.selectedGameDescription = null;
     },
     fetchData() {
       axios.get('https://www.freetogame.com/api/games')
         .then(response => this.games = response.data)
     },
     showDescription(post) {
-      this.selectedGameDescription = post.short_description
-      this.selectGenre = post.genre
-    },
-    toggleFavorite() {
-      this.isFavorite = !this.isFavorite;
-      this.favoriteGames.push(this.selectedGame);
+      this.selectedGameDescription = post.short_description;
+      this.selectGenre = post.genre;
     },
     insereFavorito(games){
-      firebase.database().ref(`/favoritos/${this.user.uid}/`).push().set(favoriteGames)
+      firebase.database().ref(`/favoritos/${this.user.uid}/`).push().set(this.selectedGame)
+      this.isFavorite = !this.isFavorite;
   }
-    
   },
   
   mounted() {

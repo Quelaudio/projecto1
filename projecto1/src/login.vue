@@ -1,6 +1,5 @@
 <template>
     <div>
-    <h1></h1>
     <input type="email" v-model="email">&nbsp; <input type="password" v-model="password"><button @click="login">login</button>
     {{ user }}
     </div>
@@ -23,7 +22,7 @@ export default {
             .signInWithEmailAndPassword(this.email,this.password)
             .then(
                 ()=>{
-                    alert('success')
+                    alert('Welcome')
                     this.user=firebase.auth().currentUser
                 }
             )
@@ -36,3 +35,11 @@ export default {
 
 
 </script>
+
+<style>
+body{
+    color: white;
+   
+}
+
+</style>
