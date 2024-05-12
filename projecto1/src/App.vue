@@ -3,7 +3,6 @@
     <div class="listGames">
       
       
-      
       <div v-for="post in games" :key="post.id" style="padding-left: 30px;">  
         <div @click="selectGame(post)" >
           {{ post.title }}  
@@ -13,7 +12,8 @@
     </div>   
     
     <div class="right_img">
-      <!-- <RouterView/> -->
+      <RouterView/>
+      
       <img :src="selectedGameThumbnail" alt="">
       <button @click="showDescription(selectedGame)">Show Description</button>
       <div class="description">
@@ -22,11 +22,6 @@
         <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
 
-
-
-  
-
-  
         <svg 
           @click="insereFavorito()" 
           height="30px" 
@@ -64,7 +59,6 @@ export default {
       selectedGame: null,
       isFavorite: false ,
       favoriteGames: [],
-      user:{uid:'jOI550vLa1ZlkNN5wLybzOztEJW2'}
     }
     
   },
@@ -82,8 +76,9 @@ export default {
       this.selectedGameDescription = post.short_description;
       this.selectGenre = post.genre;
     },
+    
     insereFavorito(games){
-      firebase.database().ref(`/favoritos/${this.user.uid}/`).push().set(this.selectedGame)
+      firebase.database().ref(`/favoritos/${firebase.auth().currentUser.uid}/`).push().set(this.selectedGame)
       this.isFavorite = !this.isFavorite;
   }
   },

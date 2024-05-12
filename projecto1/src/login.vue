@@ -24,6 +24,7 @@ export default {
                 ()=>{
                     alert('Welcome')
                     this.user=firebase.auth().currentUser
+                    this.$router.push('/');
                 }
             )
         }
