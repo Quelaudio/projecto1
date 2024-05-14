@@ -1,7 +1,9 @@
 <template>
     <div>
     <input type="email" v-model="email">&nbsp; <input type="password" v-model="password"><button @click="login">login</button>
-    {{ user }}
+
+        
+    
     </div>
 </template>
 

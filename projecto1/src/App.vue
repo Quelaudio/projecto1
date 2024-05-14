@@ -2,7 +2,7 @@
   <div class="container">
     <div class="listGames">
       
-      
+      <div class="listGames" v-if="$route.name !== 'errorPage'">
       <div v-for="post in games" :key="post.id" style="padding-left: 30px;">  
         <div @click="selectGame(post)" >
           {{ post.title }}  
@@ -10,16 +10,29 @@
         </div>
       </div> 
     </div>   
-    
+  </div>
+  
+  
     <div class="right_img">
+      <div>
+    <router-link to="/login">
+      <button class="comic-button">Login!</button>
+    </router-link>
+    
+    
+    <router-link to="/register">
+      <button class="comic-button">Register!</button>
+    </router-link>
+  </div>
       <RouterView/>
       
-      <img :src="selectedGameThumbnail" alt="">
-      <button @click="showDescription(selectedGame)">Show Description</button>
+      
+      <img :src="selectedGameThumbnail" alt="" class="img">
+      <button @click="showDescription(selectedGame)" class="comic-button">Show Description</button>
       <div class="description">
 
         <p>Descrição do jogo:</p>
-        <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
+        <p v-if="selectedGameDescription">{{ selectedGameDescription }}>   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
 
         <svg 
@@ -43,6 +56,9 @@
       </div>
     </div>
   </div>
+  
+ 
+  
 </template>
 
 <script>
@@ -103,7 +119,9 @@ export default {
   letter-spacing: 1px;
   line-height: 40px;
 }
-
+.img{
+  margin-top: 20px;
+}
 .container {
   width: 100%;
   height: 100%;
@@ -113,6 +131,36 @@ export default {
 body {
   margin: 0;
   background-color: #2a475e ;
+}
+.comic-button {
+  display: inline-block;
+  padding: 10px 20px 10px 10px;
+  font-size: 15.69px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #19319e;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.comic-button:hover {
+  background-color: #fff;
+  color: #13a37f;
+  border: 2px solid #14595e;
+  box-shadow: 5px 5px 0px #091a4c;
+}
+
+.comic-button:active {
+  background-color: #16d96e;
+  box-shadow: none;
+  transform: translateY(4px);
 }
 
 .right_img {
@@ -131,4 +179,5 @@ body {
   color: whitesmoke;
   line-height: 40px;
 }
+
 </style>

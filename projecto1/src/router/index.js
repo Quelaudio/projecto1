@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '../login.vue'
 import register from '../register.vue'
-
+import errorPage from '@/errorPage.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,6 +11,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    
     {
       path: '/login',
       name: 'login',
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'errorPage',
+      component: errorPage
     },
     {
       path: '/about',
