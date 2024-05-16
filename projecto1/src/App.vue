@@ -3,19 +3,31 @@
     <div class="listGames">
       
       <div class="listGames" v-if="$route.name !== 'errorPage'">
+
         <div v-for="post in filteredGames" :key="post.id" style="padding-left: 30px;">  
       
+
+      <div v-for="post in games" :key="post.id" style="padding-left: 30px;">  
+
         <div @click="selectGame(post)" >
           {{ post.title }}  
           
         </div>
       </div> 
+
     </div> 
       </div>  
   
   
       <div class="right_img">
       
+
+    </div>   
+  </div>
+  
+  
+    <div class="right_img">
+
       <div>
     <router-link to="/login">
       <button class="comic-button">Login!</button>
@@ -35,7 +47,7 @@
         <input type="text" v-model="searchTerm" placeholder="Search for games..." class="search-input">
 
         <p>Descrição do jogo:</p>
-        <p v-if="selectedGameDescription">{{ selectedGameDescription }}   </p>
+        <p v-if="selectedGameDescription">{{ selectedGameDescription }}>   </p>
         <p v-if="selectedGameDescription">  {{ selectGenre }}</p>
 
         <svg 
@@ -160,8 +172,13 @@ body {
   box-shadow: 5px 5px 0px #000000;
   transition: all 0.3s ease;
   cursor: pointer;
+
   margin-bottom: 10px;
   margin-top: 10px;
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+
 }
 
 .comic-button:hover {
