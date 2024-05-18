@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../login.vue'
 import register from '../register.vue'
 import errorPage from '@/errorPage.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

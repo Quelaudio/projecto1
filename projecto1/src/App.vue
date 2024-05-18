@@ -17,7 +17,7 @@
       <router-link to="/register">
         <button class="comic-button">Register!</button>
       </router-link>
-
+        
       <RouterView/>
 
       <img :src="selectedGameThumbnail" alt="" class="img">
@@ -47,7 +47,17 @@
         </svg>
       </div>
     </div>
+    <div class="">
+    <h2>Your Favorites</h2>
+    
+    <div v-for="favorite in favorites" :key="favorite.id" @click="selectGame(favorite)">
+      {{ favorite.title }}
+    </div>
   </div>
+  </div>
+
+  
+
 </template>
 
 <script>
@@ -63,6 +73,7 @@ export default {
       selectedGame: null,
       isFavorite: false,
       searchTerm: '',
+      favorites: [],
     };
   },
   computed: {
@@ -89,12 +100,30 @@ export default {
       firebase.database().ref(`/favoritos/${firebase.auth().currentUser.uid}/`).push(this.selectedGame)
       this.isFavorite = !this.isFavorite;
     },
+    fetchFavorites() {
+    
+    if (firebase.auth().currentUser.uid) {
+    const favoritesRef = firebase.database().ref(`/favoritos/${firebase.auth().currentUser.uid}/`);
+    favoritesRef.once('value').then(snapshot => {
+      const favoritesData = snapshot.val();
+      this.favorites = favoritesData ? Object.values(favoritesData) : [];
+    });
+  } else {
+    this.favorites = [];
+  }
+}
   },
+  
+  
   mounted() {
     this.fetchData();
+    this.fetchFavorites();
   },
 };
 </script>
+
+
+
 
 <style>
 .listGames {
@@ -104,6 +133,7 @@ export default {
   overflow: scroll;
   width: 600px;
   position: fixed;
+  
   left: 0;
   top: 0;
   bottom: 0;
